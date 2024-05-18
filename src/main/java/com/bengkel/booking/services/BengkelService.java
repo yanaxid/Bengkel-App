@@ -3,7 +3,6 @@ package com.bengkel.booking.services;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Scanner;
 import java.util.stream.Collectors;
 
 import com.bengkel.booking.models.BookingOrder;
@@ -17,10 +16,41 @@ public class BengkelService {
 	// Silahkan tambahkan fitur-fitur utama aplikasi disini
 
 	// Login
+	public static ArrayList<Boolean> login(List<Customer> listAllCustomers) {
+		ArrayList<Boolean> listStatus = new ArrayList<Boolean>();
+		
+		String[] listMenu = { "Login", "Exit" };
+		PrintService.printMenu(listMenu, "Booking Bengkel");
+		int x = Validation.validateInputNumber("");
+
+		switch (x) {
+			case 1:
+			MenuService.customer = Validation.validateLogin(listAllCustomers);
+				
+				if (MenuService.customer != null) {
+					listStatus.addAll(Arrays.asList(true, true));
+				} else {
+					listStatus.addAll(Arrays.asList(false, false));
+				}
+				break;
+			case 0:
+				listStatus.addAll(Arrays.asList(false, false));
+				break;
+
+			default:
+				System.out.println("Pilihan tidak ada dalam daftar menu, ulangi lagi");
+				listStatus.addAll(Arrays.asList(true, false));
+				break;
+		}
+		
+		return listStatus;
+	}
+	
 
 	// Info Customer
-	public static void showAllCutomers(Customer customer) {
+	public static void showCutomers(Customer customer) {
 		List<Vehicle> listKendaraan = new ArrayList<Vehicle>();
+
 		listKendaraan = customer.getVehicles();
 		String stausCustomer = "Non Member";
 		double saldoCoin = 0;
@@ -38,9 +68,8 @@ public class BengkelService {
 			System.out.println("   Saldo Koin ........ " + String.format("%,.0f", (double) saldoCoin));
 		}
 
-		System.err.println();
-
 		PrintService.createTableKendaraan(listKendaraan);
+
 	}
 
 	// show booking order
@@ -59,9 +88,9 @@ public class BengkelService {
 	}
 
 	// Booking atau Reservation
-	public static void showBookingMenu(Customer customer, List<ItemService> listItemServices, List<BookingOrder> bookingOrders, Scanner sc) {
+	public static void showBookingMenu(Customer customer, List<ItemService> listItemServices, List<BookingOrder> bookingOrders) {
 		List<Vehicle> vehicles = customer.getVehicles();
-		Vehicle vehicle = Validation.validateVehicle(vehicles, sc);
+		Vehicle vehicle = Validation.validateVehicle(vehicles);
 
 		String vehicleType = vehicle.getClass().getSimpleName();
 
@@ -70,7 +99,7 @@ public class BengkelService {
 
 		PrintService.createTableService(services);
 
-		List<ItemService> service = Validation.validateService(services, sc);
+		List<ItemService> service = Validation.validateService(services, customer);
 		double totalServicePrice = 0;
 
 		for (int i = 0; i < service.size(); i++) {
@@ -81,7 +110,7 @@ public class BengkelService {
 		String paymentMethod = "";
 		do {
 			System.out.print("   Pilih Metode Pembayaran (Coin atau Cash) :");
-			String metodeBayar = sc.next();
+			String metodeBayar = MenuService.sc.next();
 
 			if (metodeBayar.equalsIgnoreCase("coin")) {
 				if (customer instanceof MemberCustomer) {
@@ -91,8 +120,8 @@ public class BengkelService {
 						System.out.println("   Saldo coin anda tidak cukup, saldo anda :" + saldoCoin);
 					} else {
 						// update saldo koin
-						((MemberCustomer) customer).setSaldoCoin(saldoCoin - totalServicePrice);
-						System.out.println("   Terimaksih telah membayar, sisa saldo coin anda :" + ((MemberCustomer) customer).getSaldoCoin());
+//						((MemberCustomer) customer).setSaldoCoin(saldoCoin - totalServicePrice +);
+//						System.out.println("   Terimaksih telah membayar, sisa saldo coin anda :" + ((MemberCustomer) customer).getSaldoCoin());
 						bool = false;
 						paymentMethod = metodeBayar;
 					}
@@ -123,22 +152,36 @@ public class BengkelService {
 			} else {
 				bookingId = "Book-" + String.valueOf(lastIndex);
 			}
+			
+			
 
 		}
 
-		bookingOrders.add(new BookingOrder(bookingId, customer, service, paymentMethod, totalServicePrice, totalServicePrice));
+//		double totalPayment= totalServicePrice;
 
+		BookingOrder bookingOrder = new BookingOrder(bookingId, customer, service, paymentMethod, totalServicePrice);
+
+		if (bookingOrder.getPaymentMethod().equalsIgnoreCase("cash")) {
+			bookingOrder.setTotalPayment(totalServicePrice);
+		}else {
+			System.out.println("   Terimaksih telah membayar  dgn coin sebesar " +  bookingOrder.getTotalPayment());
+			((MemberCustomer) customer).setSaldoCoin(((MemberCustomer) customer).getSaldoCoin() - bookingOrder.getTotalPayment() );
+			
+			System.out.println("   sisal saldo coin anda :" + ((MemberCustomer) customer).getSaldoCoin());
+		}
+
+		bookingOrders.add(bookingOrder);
 		System.out.println("   Booking Berhasil!!!");
 		System.out.println("   Total Harga Service : " + totalServicePrice);
-		System.out.println("   Total Pembayaran : " + totalServicePrice);
+		System.out.println("   Total Pembayaran : " + bookingOrder.getTotalPayment());
 	}
 
 	// Top Up Saldo Coin Untuk Member Customer
-	public static void showTopupCoin(Customer customer, Scanner sc) {
+	public static void showTopupCoin(Customer customer) {
 
 		if (customer instanceof MemberCustomer) {
 			System.out.println("   Masukan besaran Top Up: ");
-			int addedSaldo = Validation.validateInputNumber("Input topup berupa angka", sc);
+			int addedSaldo = Validation.validateInputNumber("Input topup berupa angka");
 			((MemberCustomer) customer).setSaldoCoin(((MemberCustomer) customer).getSaldoCoin() + addedSaldo);
 		} else {
 			System.out.println("   Maaf anda bukan member");
@@ -147,19 +190,19 @@ public class BengkelService {
 
 	// Logout
 
-	public static List<Boolean> logOut(Customer customer, Scanner sc) {
+	public static List<Boolean> logOut(Customer customer) {
 		List<Boolean> isBool = new ArrayList<Boolean>();
 
 		boolean isLoop = true;
 		do {
 
 			System.out.print("   Anda yakin mau logout? (Y/T) : ");
-			String x = sc.next();
+			String x = MenuService.sc.next();
 			if (x.equalsIgnoreCase("y")) {
 				isLoop = false;
 				System.out.println(customer.getName() + " ... Logout");
 				isBool.addAll(Arrays.asList(false, false));
-				
+
 			} else if (x.equalsIgnoreCase("t")) {
 				isBool.addAll(Arrays.asList(true, false));
 				isLoop = false;

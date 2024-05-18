@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+
 public class BookingOrder implements IBengkelPayment {
 	private String bookingId;
 	private Customer customer;
@@ -29,5 +30,20 @@ public class BookingOrder implements IBengkelPayment {
 
 		setTotalPayment(getTotalServicePrice() - discount);
 	}
+
+	public BookingOrder(String bookingId, Customer customer, List<ItemService> services, String paymentMethod, double totalServicePrice) {
+		this.bookingId = bookingId;
+		this.customer = customer;
+		this.services = services;
+		this.paymentMethod = paymentMethod;
+		this.totalServicePrice = totalServicePrice;
+		
+		calculatePayment();
+	}
+
+	
+
+
+	
 
 }

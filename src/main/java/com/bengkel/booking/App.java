@@ -4,7 +4,12 @@ import com.bengkel.booking.services.MenuService;
 
 public class App {
 	public static void main(String[] args) {
-		MenuService.run();
+		
+		MenuService menuService = new MenuService();
+		menuService.run();
 		System.out.println("Terimaksih");
+		
+		
+		
 	}
 }
