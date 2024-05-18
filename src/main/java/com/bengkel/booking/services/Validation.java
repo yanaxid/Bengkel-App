@@ -49,7 +49,6 @@ public class Validation {
 
 					if (password.equals(listAllCustomers.get(i).getPassword())) {
 						message = "login ... as " + listAllCustomers.get(i).getName();
-
 						customer = listAllCustomers.get(i);
 						break;
 					} else {
@@ -81,7 +80,7 @@ public class Validation {
 			counter++;
 		} while (counter <= 3);
 
-		if (counter == 3) {
+		if (customer == null) {
 			System.out.println("*kesempatan hanya 3x");
 		}
 
@@ -137,7 +136,24 @@ public class Validation {
 
 				if (id.equalsIgnoreCase(services.get(i).getServiceId())) {
 					status = false;
-					listItemServices.add(services.get(i));
+
+					if (listItemServices.size() != 0) {
+						boolean isSame = true;
+
+						for (int j = 0; j < listItemServices.size(); j++) {
+
+							if (id.equalsIgnoreCase(listItemServices.get(j).getServiceId())) {
+								System.out.println("   Gagal! servise sudah ditambahkan sebelumnya");
+								isSame = false;
+								break;
+							}
+						}
+						if (isSame) {
+							listItemServices.add(services.get(i));
+						}
+					} else {
+						listItemServices.add(services.get(i));
+					}
 				}
 			}
 
@@ -150,11 +166,29 @@ public class Validation {
 
 					if (id.equalsIgnoreCase(services.get(i).getServiceId())) {
 						status = false;
-						listItemServices.add(services.get(i));
+
+						if (listItemServices.size() != 0) {
+							boolean isSame = true;
+
+							for (int j = 0; j < listItemServices.size(); j++) {
+
+								if (id.equalsIgnoreCase(listItemServices.get(j).getServiceId())) {
+									System.out.println("   Gagal! servise sudah ditambahkan sebelumnya");
+									isSame = false;
+									break;
+								}
+							}
+							if (isSame) {
+								listItemServices.add(services.get(i));
+							}
+						} else {
+							listItemServices.add(services.get(i));
+						}
 					}
 				}
 
 			}
+
 			System.out.print("   Ingin tambah service yang lain (Y/T)? ");
 
 			String x = sc.next();
@@ -169,18 +203,4 @@ public class Validation {
 		return listItemServices;
 	}
 
-//	public static int validasiNumberWithRange(String question, String errorMessage, String regex, int max, int min) {
-//		int result;
-//		boolean isLooping = true;
-//		do {
-//			result = Integer.valueOf(validasiInput(question, errorMessage, regex));
-//			if (result >= min && result <= max) {
-//				isLooping = false;
-//			} else {
-//				System.out.println("Pilihan angka " + min + " s.d " + max);
-//			}
-//		} while (isLooping);
-//
-//		return result;
-//	}
 }

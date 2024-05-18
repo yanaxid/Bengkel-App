@@ -30,29 +30,7 @@ public class PrintService {
 		}
 	}
 
-	public static void showAllCutomers(Customer customer) {
-		List<Vehicle> listKendaraan = new ArrayList<Vehicle>();
-		listKendaraan = customer.getVehicles();
-		String stausCustomer = "Non Member";
-		double saldoCoin = 0;
-		if (customer instanceof MemberCustomer) {
-			stausCustomer = "Member";
-			saldoCoin = ((MemberCustomer) customer).getSaldoCoin();
-		}
-
-		System.out.println("   Customer Profile");
-		System.out.println("   Customer ID ....... " + customer.getCustomerId());
-		System.out.println("   Nama .............. " + customer.getName());
-		System.out.println("   Customer Status ... " + stausCustomer);
-		System.out.println("   Alamat ............ " + customer.getAddress());
-		if (stausCustomer.equalsIgnoreCase("Member")) {
-			System.out.println("   Saldo Koin ........ " + String.format("%,.0f", (double) saldoCoin));
-		}
-
-		System.err.println();
-
-		createTableKendaraan(listKendaraan);
-	}
+	
 
 	public static void createTableKendaraan(List<Vehicle> listKendaraan) {
 		List<String[]> dataTable = new ArrayList<String[]>();

@@ -28,7 +28,6 @@ public class MenuService {
 				isLooping = mainMenu();
 			}
 		} while (isLooping);
-
 	}
 
 	public static ArrayList<Boolean> login() {
@@ -73,26 +72,25 @@ public class MenuService {
 			switch (x) {
 				case 1:
 					// panggil fitur Informasi Customer
-					PrintService.showAllCutomers(customer);
+					BengkelService.showAllCutomers(customer);
 					break;
 				case 2:
 					// panggil fitur Booking Bengkel
-					BookingMenu.showBookingMenu(customer, listAllItemService, bookingOrders,sc);
+					BengkelService.showBookingMenu(customer, listAllItemService, bookingOrders,sc);
 					break;
 				case 3:
 					// panggil fitur Top Up Saldo Coin
-					TopupCoin.showTopupCoin(customer, sc);
+					BengkelService.showTopupCoin(customer, sc);
 					break;
 				case 4:
 					// panggil fitur Informasi Booking Order
-					BookingOrderMenu.showBookingOrderMenu(bookingOrders);
+					BengkelService.showBookingOrderMenu(bookingOrders);
 					break;
 				case 0:
-					System.out.println(customer.getName() + " Logout ...");
-					isLooping = false;
-					status = false;
+					List<Boolean> isBool = BengkelService.logOut(customer, sc);
+					isLooping = isBool.get(0);
+					status = isBool.get(1);
 					break;
-
 				default:
 					System.out.println("Pilihan tidak ada dalam daftar menu, ulangi lagi");
 					break;
