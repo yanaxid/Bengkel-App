@@ -139,18 +139,23 @@ public class BengkelService {
 		} while (bool);
 
 		String bookingId = "";
+		
+		
 
 		if (bookingOrders.size() == 0) {
-			bookingId = "Book-001";
+			bookingId = "Book-"+customer.getCustomerId()+"-001";
+//			Book-Cust-001-003
 
 		} else {
 
-			int lastIndex = Integer.valueOf(bookingOrders.get(bookingOrders.size() - 1).getBookingId().substring(5)) + 1;
+			int lastIndex = Integer.valueOf(bookingOrders.get(bookingOrders.size() - 1).getBookingId().substring(14)) + 1;
 
 			if (lastIndex <= 9) {
-				bookingId = "Book-00" + String.valueOf(lastIndex);
-			} else {
-				bookingId = "Book-" + String.valueOf(lastIndex);
+				bookingId = "Book-"+customer.getCustomerId()+"-00" + String.valueOf(lastIndex);
+			}else if (lastIndex < 100) {
+				bookingId = "Book-"+customer.getCustomerId()+"-0" + String.valueOf(lastIndex);
+			}else {
+				bookingId = "Book-"+customer.getCustomerId()+"-" + String.valueOf(lastIndex);
 			}
 			
 			
@@ -180,11 +185,11 @@ public class BengkelService {
 	public static void showTopupCoin(Customer customer) {
 
 		if (customer instanceof MemberCustomer) {
-			System.out.println("   Masukan besaran Top Up: ");
+			System.out.print("   Masukan besaran Top Up: ");
 			int addedSaldo = Validation.validateInputNumber("Input topup berupa angka");
 			((MemberCustomer) customer).setSaldoCoin(((MemberCustomer) customer).getSaldoCoin() + addedSaldo);
 		} else {
-			System.out.println("   Maaf anda bukan member");
+			System.out.println("   Maaf fitur ini hanya untuk Member saja!");
 		}
 	}
 

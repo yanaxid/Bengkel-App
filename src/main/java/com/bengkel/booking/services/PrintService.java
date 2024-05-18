@@ -1,5 +1,7 @@
 package com.bengkel.booking.services;
 
+
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,7 +53,12 @@ public class PrintService {
 
 		String columnWidth = "";
 		for (int i = 0; i < listColumnWidht.length; i++) {
-			columnWidth += "|" + " %-" + listColumnWidht[i] + "s ";
+			
+			if(i == 4) {
+				columnWidth += "|" + " %" + listColumnWidht[i] + "s ";
+			}else {
+				columnWidth += "|" + " %-" + listColumnWidht[i] + "s ";
+			}
 		}
 		columnWidth += "|";
 
@@ -96,7 +103,12 @@ public class PrintService {
 
 		String columnWidth = "";
 		for (int i = 0; i < listColumnWidht.length; i++) {
-			columnWidth += "|" + " %-" + listColumnWidht[i] + "s ";
+			
+			if(i == 4) {
+				columnWidth += "|" + " %" + listColumnWidht[i] + "s ";
+			}else {
+				columnWidth += "|" + " %-" + listColumnWidht[i] + "s ";
+			}
 		}
 		columnWidth += "|";
 
@@ -121,7 +133,7 @@ public class PrintService {
 		List<String[]> dataTable = new ArrayList<String[]>();
 
 		//
-		String[] heading = { "No", "Book ID", "Customer Name", "Payment Method", "Total Service", "Total Payment", "Service List" };
+		String[] heading = { "No", "Book ID", "Customer Name", "Payment Method", "Total Service", "Total Payment", "Service List", "Booking Date" };
 		int no = 1;
 		for (BookingOrder e : bookingOrders) {
 
@@ -130,13 +142,17 @@ public class PrintService {
 			}
 			String services = "";
 			for (int i = 0; i < e.getServices().size(); i++) {
-
 				services += e.getServices().get(i).getServiceName() + ", ";
-
 			}
-
+			
+		
+			
+			services += services.substring(0, services.length()-2);
+			
+			
 			String[] body = { String.valueOf(no), e.getBookingId(), e.getCustomer().getName(), e.getPaymentMethod(),
-					String.format("%,.0f", (double) e.getTotalServicePrice()), String.format("%,.0f", (double) e.getTotalPayment()), services };
+					String.format("%,.0f", (double) e.getTotalServicePrice()), String.format("%,.0f", (double) e.getTotalPayment()), services,
+					String.valueOf(LocalDate.now() )};
 			dataTable.add(body);
 			no++;
 
@@ -148,7 +164,12 @@ public class PrintService {
 
 		String columnWidth = "";
 		for (int i = 0; i < listColumnWidht.length; i++) {
-			columnWidth += "|" + " %-" + listColumnWidht[i] + "s ";
+			
+			if(i == 4 || i == 5 || i == 7) {
+				columnWidth += "|" + " %" + listColumnWidht[i] + "s ";
+			}else {
+				columnWidth += "|" + " %-" + listColumnWidht[i] + "s ";
+			}
 		}
 		columnWidth += "|";
 
@@ -157,12 +178,12 @@ public class PrintService {
 		for (int i = 0; i < dataTable.size(); i++) {
 			if (i == 0) {
 				System.out.printf("   " + columnWidth, dataTable.get(i)[0], dataTable.get(i)[1], dataTable.get(i)[2], dataTable.get(i)[3],
-						dataTable.get(i)[4], dataTable.get(i)[5], dataTable.get(i)[6]);
+						dataTable.get(i)[4], dataTable.get(i)[5], dataTable.get(i)[6], dataTable.get(i)[7]);
 				System.out.println();
 				System.out.println("   " + lines);
 			} else {
 				System.out.printf("   " + columnWidth, dataTable.get(i)[0], dataTable.get(i)[1], dataTable.get(i)[2], dataTable.get(i)[3],
-						dataTable.get(i)[4], dataTable.get(i)[5], dataTable.get(i)[6]);
+						dataTable.get(i)[4], dataTable.get(i)[5], dataTable.get(i)[6], dataTable.get(i)[7]);
 				System.out.println();
 			}
 		}

@@ -124,14 +124,11 @@ public class Validation {
 	public static List<ItemService> validateService(List<ItemService> services, Customer customer) {
 		List<ItemService> listItemServices = new ArrayList<ItemService>();
 
-		int serviceEvail = 0;
 		String customerType = "";
 
 		if (customer instanceof MemberCustomer) {
-			serviceEvail = 2;
 			customerType = "member";
 		} else {
-			serviceEvail = 1;
 			customerType = "non member";
 		}
 
@@ -201,26 +198,35 @@ public class Validation {
 				}
 
 			}
-			
-			
-			if(customerType.equalsIgnoreCase("member") && listItemServices.size() == 2) {
-				isNext = false;
-			}if(customerType.equalsIgnoreCase("non member") && listItemServices.size() == 1) {
-				isNext = false;
-				
-			}else {
-				System.out.print("   Ingin tambah service yang lain (Y/T)? ");
 
-				String x = MenuService.sc.next();
-				if (x.equalsIgnoreCase("y")) {
-					isNext = true;
-				} else if (x.equalsIgnoreCase("t")) {
-					isNext = false;
+		
 
-				}
+			if (customerType.equalsIgnoreCase("member") && listItemServices.size() == 2) {
+				isNext = false;
+			} else if (customerType.equalsIgnoreCase("non member") && listItemServices.size() == 1) {
+				isNext = false;
+			} else {
+
+				boolean isLoop = true;
+				do {
+					System.out.print("   Ingin tambah service yang lain (Y/T)? ");
+					String x = MenuService.sc.next();
+					if (x.equalsIgnoreCase("y")) {
+						isLoop = false;
+						isNext = true;
+
+					} else if (x.equalsIgnoreCase("t")) {
+						isLoop = false;
+						isNext = false;
+
+					} else {
+						System.out.println("   Inputkan hurup y/t");
+					}
+
+				} while (isLoop);
+
 			}
 
-			
 		} while (isNext);
 
 		return listItemServices;
