@@ -30,6 +30,7 @@ public class BookingMenu {
 			totalServicePrice += service.get(i).getPrice();
 		}
 
+		
 		boolean bool = true;
 		String paymentMethod = "";
 		do {
