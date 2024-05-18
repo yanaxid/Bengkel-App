@@ -17,7 +17,7 @@ public class MenuService {
 	protected static Customer customer = null;
 	public static Scanner sc = new Scanner(System.in);
 
-	public void run() {
+	public static void run() {
 		boolean isLooping = true;
 		do {
 			ArrayList<Boolean> listStatus = BengkelService.login(listAllCustomers);
@@ -28,7 +28,7 @@ public class MenuService {
 		} while (isLooping);
 	}
 
-	public boolean mainMenu() {
+	public static boolean mainMenu() {
 
 		boolean status = true;
 

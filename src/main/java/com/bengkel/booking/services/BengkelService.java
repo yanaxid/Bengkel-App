@@ -205,7 +205,7 @@ public class BengkelService {
 			String x = MenuService.sc.next();
 			if (x.equalsIgnoreCase("y")) {
 				isLoop = false;
-				System.out.println(customer.getName() + " ... Logout");
+				System.out.println("   "+customer.getName() + " ... Logout");
 				isBool.addAll(Arrays.asList(false, false));
 
 			} else if (x.equalsIgnoreCase("t")) {
