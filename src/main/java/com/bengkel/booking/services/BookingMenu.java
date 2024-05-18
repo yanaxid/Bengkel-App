@@ -18,7 +18,7 @@ public class BookingMenu {
 
 		String vehicleType = vehicle.getClass().getSimpleName();
 
-		List<ItemService> services = listItemServices.stream().filter(o -> o.getVehicleType().equalsIgnoreCase(vehicleType))
+		List<ItemService> services =listItemServices.stream().filter(o -> o.getVehicleType().equalsIgnoreCase(vehicleType))
 				.collect(Collectors.toList());
 
 		PrintService.createTableService(services);
