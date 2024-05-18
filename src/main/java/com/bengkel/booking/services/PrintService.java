@@ -147,7 +147,7 @@ public class PrintService {
 			
 		
 			
-			services += services.substring(0, services.length()-2);
+			services = services.substring(0, services.length()-2);
 			
 			
 			String[] body = { String.valueOf(no), e.getBookingId(), e.getCustomer().getName(), e.getPaymentMethod(),

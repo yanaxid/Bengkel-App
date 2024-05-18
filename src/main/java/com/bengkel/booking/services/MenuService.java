@@ -37,12 +37,11 @@ public class MenuService {
 
 		do {
 
-			PrintService.printMenu(listMenu, "Booking Bengkel Menu");
+			PrintService.printMenu(listMenu, "BOOKING BENGKEL MENU");
 			int x = Validation.validateInputNumber("");
 			switch (x) {
 				case 1:
 					// panggil fitur Informasi Customer
-
 					BengkelService.showCutomers(customer);
 					break;
 				case 2:

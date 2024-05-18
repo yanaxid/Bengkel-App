@@ -18,15 +18,15 @@ public class BengkelService {
 	// Login
 	public static ArrayList<Boolean> login(List<Customer> listAllCustomers) {
 		ArrayList<Boolean> listStatus = new ArrayList<Boolean>();
-		
+
 		String[] listMenu = { "Login", "Exit" };
-		PrintService.printMenu(listMenu, "Booking Bengkel");
+		PrintService.printMenu(listMenu, "BOOKING BENGKEL");
 		int x = Validation.validateInputNumber("");
 
 		switch (x) {
 			case 1:
-			MenuService.customer = Validation.validateLogin(listAllCustomers);
-				
+				MenuService.customer = Validation.validateLogin(listAllCustomers);
+
 				if (MenuService.customer != null) {
 					listStatus.addAll(Arrays.asList(true, true));
 				} else {
@@ -42,10 +42,9 @@ public class BengkelService {
 				listStatus.addAll(Arrays.asList(true, false));
 				break;
 		}
-		
+
 		return listStatus;
 	}
-	
 
 	// Info Customer
 	public static void showCutomers(Customer customer) {
@@ -59,7 +58,7 @@ public class BengkelService {
 			saldoCoin = ((MemberCustomer) customer).getSaldoCoin();
 		}
 
-		System.out.println("   Customer Profile");
+		System.out.println("   CUSTOMER PROFILE");
 		System.out.println("   Customer ID ....... " + customer.getCustomerId());
 		System.out.println("   Nama .............. " + customer.getName());
 		System.out.println("   Customer Status ... " + stausCustomer);
@@ -119,9 +118,6 @@ public class BengkelService {
 					if (saldoCoin < totalServicePrice) {
 						System.out.println("   Saldo coin anda tidak cukup, saldo anda :" + saldoCoin);
 					} else {
-						// update saldo koin
-//						((MemberCustomer) customer).setSaldoCoin(saldoCoin - totalServicePrice +);
-//						System.out.println("   Terimaksih telah membayar, sisa saldo coin anda :" + ((MemberCustomer) customer).getSaldoCoin());
 						bool = false;
 						paymentMethod = metodeBayar;
 					}
@@ -139,11 +135,9 @@ public class BengkelService {
 		} while (bool);
 
 		String bookingId = "";
-		
-		
 
 		if (bookingOrders.size() == 0) {
-			bookingId = "Book-"+customer.getCustomerId()+"-001";
+			bookingId = "Book-" + customer.getCustomerId() + "-001";
 //			Book-Cust-001-003
 
 		} else {
@@ -151,14 +145,12 @@ public class BengkelService {
 			int lastIndex = Integer.valueOf(bookingOrders.get(bookingOrders.size() - 1).getBookingId().substring(14)) + 1;
 
 			if (lastIndex <= 9) {
-				bookingId = "Book-"+customer.getCustomerId()+"-00" + String.valueOf(lastIndex);
-			}else if (lastIndex < 100) {
-				bookingId = "Book-"+customer.getCustomerId()+"-0" + String.valueOf(lastIndex);
-			}else {
-				bookingId = "Book-"+customer.getCustomerId()+"-" + String.valueOf(lastIndex);
+				bookingId = "Book-" + customer.getCustomerId() + "-00" + String.valueOf(lastIndex);
+			} else if (lastIndex < 100) {
+				bookingId = "Book-" + customer.getCustomerId() + "-0" + String.valueOf(lastIndex);
+			} else {
+				bookingId = "Book-" + customer.getCustomerId() + "-" + String.valueOf(lastIndex);
 			}
-			
-			
 
 		}
 
@@ -168,17 +160,17 @@ public class BengkelService {
 
 		if (bookingOrder.getPaymentMethod().equalsIgnoreCase("cash")) {
 			bookingOrder.setTotalPayment(totalServicePrice);
-		}else {
-			System.out.println("   Terimaksih telah membayar  dgn coin sebesar " +  bookingOrder.getTotalPayment());
-			((MemberCustomer) customer).setSaldoCoin(((MemberCustomer) customer).getSaldoCoin() - bookingOrder.getTotalPayment() );
-			
+		} else {
+			System.out.println("   Terimaksih telah membayar  dgn coin sebesar " + bookingOrder.getTotalPayment());
+			((MemberCustomer) customer).setSaldoCoin(((MemberCustomer) customer).getSaldoCoin() - bookingOrder.getTotalPayment());
+
 			System.out.println("   sisal saldo coin anda :" + ((MemberCustomer) customer).getSaldoCoin());
 		}
 
 		bookingOrders.add(bookingOrder);
 		System.out.println("   Booking Berhasil!!!");
-		System.out.println("   Total Harga Service : " + totalServicePrice);
-		System.out.println("   Total Pembayaran : " + bookingOrder.getTotalPayment());
+		System.out.println("   Total Harga Service : " + String.format("%,.0f", (double)totalServicePrice) );
+		System.out.println("   Total Pembayaran : " + String.format("%,.0f", (double)bookingOrder.getTotalPayment()));
 	}
 
 	// Top Up Saldo Coin Untuk Member Customer
@@ -205,7 +197,7 @@ public class BengkelService {
 			String x = MenuService.sc.next();
 			if (x.equalsIgnoreCase("y")) {
 				isLoop = false;
-				System.out.println("   "+customer.getName() + " ... Logout");
+				System.out.println("   " + customer.getName() + " ... Logout");
 				isBool.addAll(Arrays.asList(false, false));
 
 			} else if (x.equalsIgnoreCase("t")) {
