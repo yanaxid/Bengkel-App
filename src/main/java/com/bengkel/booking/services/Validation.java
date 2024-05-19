@@ -20,8 +20,6 @@ public class Validation {
 			if (numberInput.matches("[0-9]+")) {
 				isValid = false;
 			} else {
-				isValid = true;
-
 				if (message.equalsIgnoreCase("")) {
 					message += "Inputan harus angka!";
 				}
@@ -44,7 +42,6 @@ public class Validation {
 			System.out.print("Password: ");
 			String password = MenuService.sc.next();
 			String message = "";
-
 			for (int i = 0; i < listAllCustomers.size(); i++) {
 				if (username.equalsIgnoreCase(listAllCustomers.get(i).getCustomerId())) {
 
@@ -55,27 +52,20 @@ public class Validation {
 					} else {
 						if (counter == 3) {
 							message = "!pass salah, kesempatan habis";
-
 						} else {
 							message = "!pass salah, kesempatan " + (3 - counter) + "x lagi";
-
 						}
 						break;
 					}
-
 				} else {
 					if (counter == 3) {
 						message = "!user tidak ada, kesempatan habis";
-
 					} else {
 						message = "!user tidak ada, kesempatan " + (3 - counter) + "x lagi";
-
 					}
-
 				}
 			}
 			System.out.println(message);
-
 			if (customer != null) {
 				break;
 			}

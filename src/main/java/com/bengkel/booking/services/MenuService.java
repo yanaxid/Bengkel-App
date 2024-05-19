@@ -34,26 +34,22 @@ public class MenuService {
 
 		String[] listMenu = { "Informasi Customer", "Booking Bengkel", "Top Up Bengkel Coin", "Informasi Booking", "Logout" };
 		boolean isLooping = true;
-
+		
 		do {
 
 			PrintService.printMenu(listMenu, "BOOKING BENGKEL MENU");
 			int x = Validation.validateInputNumber("");
 			switch (x) {
 				case 1:
-					// panggil fitur Informasi Customer
 					BengkelService.showCutomers(customer);
 					break;
 				case 2:
-					// panggil fitur Booking Bengkel
 					BengkelService.showBookingMenu(customer, listAllItemService, bookingOrders);
 					break;
 				case 3:
-					// panggil fitur Top Up Saldo Coin
 					BengkelService.showTopupCoin(customer);
 					break;
 				case 4:
-					// panggil fitur Informasi Booking Order
 					BengkelService.showBookingOrderMenu(bookingOrders);
 					break;
 				case 0:
@@ -68,7 +64,5 @@ public class MenuService {
 		} while (isLooping);
 		return status;
 	}
-
-
 
 }

@@ -133,7 +133,7 @@ public class PrintService {
 		List<String[]> dataTable = new ArrayList<String[]>();
 
 		//
-		String[] heading = { "No", "Book ID", "Customer Name", "Payment Method", "Total Service", "Total Payment", "Service List", "Booking Date" };
+		String[] heading = { "No", "Book ID", "Name", "Payment Method", "Service Price", "Total Payment", "Service List", "Date" };
 		int no = 1;
 		for (BookingOrder e : bookingOrders) {
 

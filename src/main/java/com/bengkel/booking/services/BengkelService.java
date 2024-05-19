@@ -13,8 +13,6 @@ import com.bengkel.booking.models.Vehicle;
 
 public class BengkelService {
 
-	// Silahkan tambahkan fitur-fitur utama aplikasi disini
-
 	// Login
 	public static ArrayList<Boolean> login(List<Customer> listAllCustomers) {
 		ArrayList<Boolean> listStatus = new ArrayList<Boolean>();
@@ -26,7 +24,6 @@ public class BengkelService {
 		switch (x) {
 			case 1:
 				MenuService.customer = Validation.validateLogin(listAllCustomers);
-
 				if (MenuService.customer != null) {
 					listStatus.addAll(Arrays.asList(true, true));
 				} else {
@@ -75,11 +72,9 @@ public class BengkelService {
 	public static void showBookingOrderMenu(List<BookingOrder> bookingOrders) {
 
 		if (bookingOrders.size() == 0) {
-			System.out.printf("   +-------------------+");
-			System.out.println();
-			System.out.printf("   | Data masih kosong |");
-			System.out.println();
-			System.out.printf("   +-------------------+\n");
+			System.out.print("   +-------------------+\n");
+			System.out.print("   | Data masih kosong |\n");
+			System.out.print("   +-------------------+\n");
 		} else {
 			PrintService.createTableBookingOrder(bookingOrders);
 		}
@@ -192,22 +187,20 @@ public class BengkelService {
 
 		boolean isLoop = true;
 		do {
-
+			
 			System.out.print("   Anda yakin mau logout? (Y/T) : ");
 			String x = MenuService.sc.next();
 			if (x.equalsIgnoreCase("y")) {
 				isLoop = false;
 				System.out.println("   " + customer.getName() + " ... Logout");
 				isBool.addAll(Arrays.asList(false, false));
-
 			} else if (x.equalsIgnoreCase("t")) {
 				isBool.addAll(Arrays.asList(true, false));
 				isLoop = false;
-
 			} else {
 				System.out.println("   Inputkan hurup y/t");
 			}
-
+			
 		} while (isLoop);
 
 		return isBool;
